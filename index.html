@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dibuja con tu mano (Webcam + MediaPipe Hands)</title>
+  <meta name="description" content="Dibuja moviendo tu mano frente a la webcam con detección de dedos vía MediaPipe Hands." />
+  <meta name="theme-color" content="#21000f" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <h1 class="topbar__title">Dibuja con tu mano</h1>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2 class="panel__title">Controles</h2>
+
+      <div class="controls">
+        <div class="btns">
+          <button id="startBtn" class="primary">Iniciar cámara</button>
+          <button id="stopBtn">Detener cámara</button>
+          <button id="clearBtn">Limpiar lienzo</button>
+          <button id="undoBtn">Deshacer</button>
+          <button id="saveBtn">Descargar PNG</button>
+        </div>
+
+        <div class="row">
+          <label for="color">Color</label>
+          <input id="color" type="color" value="#feffd4" />
+        </div>
+
+        <div class="row">
+          <label for="size">Grosor <span id="sizeVal" class="kbd">6 px</span></label>
+          <input id="size" type="range" min="1" max="30" step="1" value="6" />
+        </div>
+
+        <div class="row">
+          <label for="smooth">Suavizado <span id="smoothVal" class="kbd">0.6</span></label>
+          <input id="smooth" type="range" min="0" max="0.95" step="0.05" value="0.6" />
+        </div>
+
+        <div class="row">
+          <label for="mode">Modo</label>
+          <select id="mode">
+            <option value="pinch" selected>Pinch (pulgar–índice)</option>
+            <option value="always">Siempre dibujar</option>
+            <option value="hover">Solo cursor (sin dibujar)</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label for="mirror">Espejo</label>
+          <select id="mirror">
+            <option value="on" selected>ON (natural)</option>
+            <option value="off">OFF</option>
+          </select>
+        </div>
+
+        <div class="chip">
+          Atajos:
+          <span class="kbd">C</span> limpiar ·
+          <span class="kbd">Z</span> deshacer ·
+          <span class="kbd">S</span> guardar
+        </div>
+
+        <div class="chip warning">Si la cámara no inicia, revisa permisos del navegador.</div>
+      </div>
+    </section>
+
+    <section class="stage-wrap">
+      <div class="stage" id="stage">
+        <video id="video" playsinline></video>
+        <canvas id="draw" class="drawing"></canvas>
+        <canvas id="overlay" class="overlay"></canvas>
+
+        <div class="legend">
+          <div class="pill" id="statusPill">Estado: detenido</div>
+          <div class="pill">FPS: <span id="fps">0</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Construido con MediaPipe Hands. No se envían datos a ningún servidor.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+
